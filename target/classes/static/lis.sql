@@ -11,7 +11,7 @@
  Target Server Version : 50515
  File Encoding         : 65001
 
- Date: 03/01/2020 17:49:44
+ Date: 06/01/2020 17:37:26
 */
 
 SET NAMES utf8mb4;
@@ -33,6 +33,18 @@ CREATE TABLE `driver`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
+-- Table structure for driver_truck
+-- ----------------------------
+DROP TABLE IF EXISTS `driver_truck`;
+CREATE TABLE `driver_truck`  (
+  `driver_truck_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '司机使用货车id',
+  `truck_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '货车id',
+  `driver_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '司机id',
+  `create_time` timestamp DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`driver_truck_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
 -- Table structure for emp
 -- ----------------------------
 DROP TABLE IF EXISTS `emp`;
@@ -49,6 +61,45 @@ CREATE TABLE `emp`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
+-- Table structure for goods
+-- ----------------------------
+DROP TABLE IF EXISTS `goods`;
+CREATE TABLE `goods`  (
+  `goods_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '货物id',
+  `goods_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '货物名字',
+  `goods_information` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '货物信息',
+  `goods_weight` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '货物重量',
+  `goods_addressee` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '货物收件人',
+  `order_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单id',
+  `sender_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '发送人id（用户id）',
+  `create_time` timestamp DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`goods_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for out_of_stock
+-- ----------------------------
+DROP TABLE IF EXISTS `out_of_stock`;
+CREATE TABLE `out_of_stock`  (
+  `Out_of_stock_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '出库id',
+  `Warehouse_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '仓库id',
+  `goods_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '货物id',
+  `driver_truck_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '送货司机',
+  `create_time` timestamp DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`Out_of_stock_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for power
+-- ----------------------------
+DROP TABLE IF EXISTS `power`;
+CREATE TABLE `power`  (
+  `power_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '权限主键',
+  `power_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '权限名',
+  PRIMARY KEY (`power_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
 -- Table structure for role
 -- ----------------------------
 DROP TABLE IF EXISTS `role`;
@@ -56,6 +107,50 @@ CREATE TABLE `role`  (
   `role_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色主键',
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色名称',
   PRIMARY KEY (`role_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for role_power
+-- ----------------------------
+DROP TABLE IF EXISTS `role_power`;
+CREATE TABLE `role_power`  (
+  `role_power` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色权限主键',
+  `role_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色id',
+  `power` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '权限id',
+  PRIMARY KEY (`role_power`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for route
+-- ----------------------------
+DROP TABLE IF EXISTS `route`;
+CREATE TABLE `route`  (
+  `Route_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '路线主键',
+  `Route_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '路线名',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`Route_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for stock
+-- ----------------------------
+DROP TABLE IF EXISTS `stock`;
+CREATE TABLE `stock`  (
+  `Stock_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '库存id',
+  `Stock_capacity` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '库存容量',
+  PRIMARY KEY (`Stock_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for truck
+-- ----------------------------
+DROP TABLE IF EXISTS `truck`;
+CREATE TABLE `truck`  (
+  `Truck_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '货车id',
+  `Truck_number` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '货车编号',
+  `Truck_Model` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '货车型号',
+  `create_time` timestamp DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`Truck_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -72,18 +167,6 @@ CREATE TABLE `user`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Table structure for vehicle
--- ----------------------------
-DROP TABLE IF EXISTS `vehicle`;
-CREATE TABLE `vehicle`  (
-  `vehicle_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '车辆主键',
-  `license` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '车牌号',
-  `v_type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '车品牌',
-  `vload` int(11) NOT NULL COMMENT '车载重量',
-  PRIMARY KEY (`vehicle_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
-
--- ----------------------------
 -- Table structure for vip_user
 -- ----------------------------
 DROP TABLE IF EXISTS `vip_user`;
@@ -96,6 +179,34 @@ CREATE TABLE `vip_user`  (
   `address` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '会员地址',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`vip_user_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for warehouse
+-- ----------------------------
+DROP TABLE IF EXISTS `warehouse`;
+CREATE TABLE `warehouse`  (
+  `Warehouse_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '仓库主键',
+  `Stock_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '库存id',
+  `Warehouse_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '仓库名',
+  `Warehouse_address` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '仓库地址',
+  `Warehouse_state` int(2) NOT NULL COMMENT '仓库状态0（可入库）1（仓库已满）',
+  `Warehouse_staff_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '仓库管理员',
+  `create_time` timestamp DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`Warehouse_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for warehousing
+-- ----------------------------
+DROP TABLE IF EXISTS `warehousing`;
+CREATE TABLE `warehousing`  (
+  `Warehousing_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '入库id',
+  `Warehouse_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '仓库id',
+  `goods_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '货物id',
+  `driver_truck_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '送货司机中间表id',
+  `create_time` timestamp DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`Warehousing_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
