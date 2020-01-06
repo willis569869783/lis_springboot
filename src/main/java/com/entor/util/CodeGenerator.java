@@ -128,7 +128,7 @@ public class CodeGenerator {
 		// strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
 		// 写于父类中的公共字段
 		// strategy.setSuperEntityColumns("id");
-		strategy.setInclude(new String[] { "student" });
+		strategy.setInclude(new String[] { "" });
 		strategy.setControllerMappingHyphenStyle(true);
 		// strategy.setTablePrefix("crm_");
 		mpg.setStrategy(strategy);
