@@ -58,7 +58,7 @@ public class CodeGenerator {
 
 		// 数据源配置
 		DataSourceConfig dsc = new DataSourceConfig();
-		dsc.setUrl("jdbc:mysql://localhost:3306/mybatis?useUnicode=true&useSSL=false&characterEncoding=utf8");
+		dsc.setUrl("jdbc:mysql://localhost:3306/lis?useUnicode=true&useSSL=false&characterEncoding=utf8");
 		// dsc.setSchemaName("public");
 		dsc.setDriverName("com.mysql.jdbc.Driver");
 		dsc.setUsername("root");
@@ -128,7 +128,8 @@ public class CodeGenerator {
 		// strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
 		// 写于父类中的公共字段
 		// strategy.setSuperEntityColumns("id");
-		strategy.setInclude(new String[] { "" });
+		strategy.setInclude(new String[] { "driver", "driver_truck", "emp", "goods", "out_of_stock", "power", "role",
+				"role_power", "route", "stock", "truck", "user", "vip_user", "warehouse", "warehousing", "waybill" });
 		strategy.setControllerMappingHyphenStyle(true);
 		// strategy.setTablePrefix("crm_");
 		mpg.setStrategy(strategy);
