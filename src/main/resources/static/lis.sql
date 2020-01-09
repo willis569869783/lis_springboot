@@ -11,7 +11,7 @@
  Target Server Version : 50515
  File Encoding         : 65001
 
- Date: 06/01/2020 17:37:26
+ Date: 08/01/2020 17:03:45
 */
 
 SET NAMES utf8mb4;
@@ -182,6 +182,11 @@ CREATE TABLE `vip_user`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
+-- Records of vip_user
+-- ----------------------------
+INSERT INTO `vip_user` VALUES ('54545dsad', 'aa123456', 'aa123456', 'dsahgh', '11111111111', 'd5s6a46d4sa6ds', '2020-01-08 15:25:49');
+
+-- ----------------------------
 -- Table structure for warehouse
 -- ----------------------------
 DROP TABLE IF EXISTS `warehouse`;
@@ -215,16 +220,13 @@ CREATE TABLE `warehousing`  (
 DROP TABLE IF EXISTS `waybill`;
 CREATE TABLE `waybill`  (
   `waybill_no` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '运单号',
-  `s_pro` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '起始省份',
-  `s_city` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '起始城市',
-  `e_pro` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '目的省份',
-  `e_city` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '目的城市',
-  `s_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '发件人姓名',
-  `s_phone` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '发件人手机',
-  `s_address` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '发件人地址',
+  `w_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '发件人姓名',
+  `w_phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '发件人手机',
+  `w_address` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '发货人地址',
   `r_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '收件的姓名',
-  `r_phone` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '收件人手机',
+  `r_phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '收件人手机',
   `r_address` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '收件的地址',
+  `Order_state` int(1) NOT NULL COMMENT '1审核通过、0审核未通过、-1异常',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`waybill_no`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;

@@ -39,12 +39,13 @@ public class ShiroConfig {
 		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 		// 配置静态资源允许访问
 		filterChainDefinitionMap.put("/js/**", "anon");
+		filterChainDefinitionMap.put("/layui/**", "anon");
 		filterChainDefinitionMap.put("/css/**", "anon");
 		filterChainDefinitionMap.put("/index", "anon");
 		filterChainDefinitionMap.put("/user1/loginTo", "anon");
 		filterChainDefinitionMap.put("/emp/v", "anon");
 		// <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
-		filterChainDefinitionMap.put("/**", "authc");
+		filterChainDefinitionMap.put("/**", "anon");
 		// 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
 		shiroFilterFactoryBean.setLoginUrl("/user1/loginTo");
 		// 未授权界面;
