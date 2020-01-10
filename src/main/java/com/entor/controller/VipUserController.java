@@ -1,19 +1,20 @@
 package com.entor.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.entor.entity.Result;
 import com.entor.entity.VipUser;
 import com.entor.service.IVipUserService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 
 /**
  * <p>
@@ -31,16 +32,8 @@ public class VipUserController {
 	private IVipUserService vipUserService;
 
 	@RequestMapping("/queryByPage")
-	public Map<String, Object> queryByPage(int page, int limit) {
-		PageHelper.startPage(page, limit);
-		List<VipUser> list = vipUserService.list();
-		PageInfo<VipUser> pageInfo = new PageInfo<>(list);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("code", 0);
-		map.put("msg", "");
-		map.put("count", pageInfo.getTotal());
-		map.put("data", pageInfo.getList());
-		return map;
+	public Map<String, Object> queryByPage(int page, int limit, String username, String name) {
+		return vipUserService.queryByPage(page, limit, username, name);
 	}
 
 	@RequestMapping("/add")
@@ -59,5 +52,16 @@ public class VipUserController {
 	public Result deleteMore(String ids) {
 		vipUserService.removeByIds(Arrays.asList(ids.split(",")));
 		return new Result(0, "数据删除成功!");
+	}
+
+	/**
+	 * 初始化绑定日期格式
+	 *
+	 * @param binder
+	 */
+	@InitBinder
+	public void initBinder(ServletRequestDataBinder binder) {
+		// 如果当客户端传递"yyyy-MM-dd"格式的字符串,当成java.util.Date类型处理
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
 	}
 }

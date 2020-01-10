@@ -10,8 +10,7 @@ layui.use('element', function() {
 			// 关于tabAdd的方法所传入的参数可看layui的开发文档中基础方法部分
 			element.tabAdd('demo', {
 				title : name,
-				content : '<iframe data-frameid="' + id
-						+ '" scrolling="auto" frameborder="0" src="/emp/'+url+'" style="width:100%;height:720px;" ></iframe>',
+				content : '<iframe data-frameid="' +id+ '" scrolling="auto" frameborder="0" src="'+url+'" style="width:100%;height:745px;" ></iframe>',
 				id : id
 			// 规定好的id
 			})

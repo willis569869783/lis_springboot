@@ -122,11 +122,10 @@ layui.use([ 'jquery', 'table', 'layer', 'form', 'laydate' ], function() {
 			}
 		}
 	});
-	//头工具栏事件左边按钮
+	//头工具栏事件
 	table.on('toolbar(test)', function(obj) {
 		var checkStatus = table.checkStatus(obj.config.id);
 		switch(obj.event) {
-			//添加按钮
 			case 'add-vip-user-btn':
 				// 每次显示前重置表单
 				$('#vip-user-form')[0].reset();
@@ -134,10 +133,23 @@ layui.use([ 'jquery', 'table', 'layer', 'form', 'laydate' ], function() {
 				$("input[name='id']").val('');
 				title = "添加学生";
 				url = "add";
+				// 获取数据填充专业下拉框值
+//				$.ajax({
+//					url : "major/queryAll",
+//					type : "get",
+//					dataType : "json",
+//					success : function(result) {
+//						$("#majorId").empty().append(new Option('请选择专业', '')); // 清空下拉框
+//						$.each(result, function(index, item) {
+//							$("#majorId").append(new Option(item.name, item.id)); // 动态添加下拉选项
+//						});
+//						layui.form.render("select"); // 渲染下拉框
+//					}
+//				});
 				// 打开对话框
 				openDialog();
 				break;
-			//删除按钮
+				//删除
 			case 'delete-vip-user-btn':
 				if (ids.length > 0) {
 					layer.confirm("确定删除选中的" + ids.length + "条数据吗？", {
@@ -178,14 +190,14 @@ layui.use([ 'jquery', 'table', 'layer', 'form', 'laydate' ], function() {
 				layer.msg(checkStatus.isAll ? '全选' : '未全选');
 				break;
 
-			//自定义头工具栏右侧图标 - 提示
+				//自定义头工具栏右侧图标 - 提示
 			case 'LAYTABLE_TIPS':
 				layer.alert('这是工具栏右侧自定义的一个图标按钮');
 				break;
 		};
 	});
 
-	//监听行工具事件(每条数据后按钮)
+	//监听行工具事件
 	table.on('tool(test)', function(obj) {
 		var data = obj.data;
 		var event = obj.event;
@@ -270,6 +282,69 @@ layui.use([ 'jquery', 'table', 'layer', 'form', 'laydate' ], function() {
 			}
 		}
 	});
+	// 显示添加学生弹出层
+	$('#add-vip-user-btn').click(function() {
+		// 每次显示前重置表单
+		$('#vip-user-form')[0].reset();
+		// 清空表单中id值
+		$("input[name='id']").val('');
+		title = "添加学生";
+		url = "add";
+		// 获取数据填充专业下拉框值
+		$.ajax({
+			url : "major/queryAll",
+			type : "get",
+			dataType : "json",
+			success : function(result) {
+				$("#majorId").empty().append(new Option('请选择专业', '')); // 清空下拉框
+				$.each(result, function(index, item) {
+					$("#majorId").append(new Option(item.name, item.id)); // 动态添加下拉选项
+				});
+				layui.form.render("select"); // 渲染下拉框
+			}
+		});
+		// 打开对话框
+		openDialog();
+	});
+	$("#deleteMore_btn").click(function() {
+		if (ids.length > 0) {
+			layer.confirm("确定删除选中的" + ids.length + "条数据吗？", {
+				icon : 3,
+				title : '提示信息'
+			}, function(index) {
+
+				$.ajax({
+					url : "/vip-user/deleteMore",
+					type : "POST",
+					data : "ids=" + ids.join(),
+					dataType : 'json',
+					success : function(data) {
+						if (data.statue == 0) {
+							layer.close(index);
+							layer.msg(data.msg);
+							table.reload('test');
+						} else {
+							layer.msg('删除失败');
+						}
+					}
+				});
+
+			})
+		} else {
+			layer.msg("请选择需要删除的记录");
+		}
+	});
+	/*
+	 * //批量删除 $("#deleteMore_btn").click(function(){ var checkStatus =
+	 * table.checkStatus('vip-user-tbl'), data = checkStatus.data, ids =
+	 * []; if(data.length > 0) { layer.confirm("确定删除选中的"+data.length+"条数据吗？",
+	 * {icon: 3, title: '提示信息'}, function (index) { for (var i in data) {
+	 * ids.push(data[i].id); } $.ajax({ url : "vip-user/deleteMore", type :
+	 * "POST", data : "ids="+ids.join(), dataType : 'json', success :
+	 * function(data) { if (data.statue == 0) { layer.close(index);
+	 * layer.msg(data.msg); table.reload('vip-user-tbl'); } else {
+	 * layer.msg('删除失败'); } } }); }) }else{ layer.msg("请选择需要删除的记录"); } });
+	 */
 	// 添加学生表单提交
 	form.on('submit(vip-user-form-submit)', function(data) {
 		// ajax方式添加学生
@@ -295,7 +370,68 @@ layui.use([ 'jquery', 'table', 'layer', 'form', 'laydate' ], function() {
 		// 阻止表单跳转
 		return false;
 	});
-	//模糊查询
+
+	// 监听行工具栏事件：删除学生与更新学生
+	table.on('tool(vip-user-tbl)', function(obj) {
+		// 获取当前行数据和lay-event的值
+		var data = obj.data;
+		var event = obj.event;
+
+		// 删除学生事件
+		if (event === 'deleteStudentListen') {
+			layer.confirm('确定删除该学生吗？', function(index) {
+				// ajax方式删除学生
+				$.ajax({
+					url : 'vip-user/deleteMore',
+					type : "post",
+					data : 'ids=' + data.id,
+					dataType : 'json',
+					success : function(data) {
+						if (data.statue == 0) {
+							layer.msg(data.msg);
+							table.reload('vip-user-tbl');
+						} else {
+							layer.msg('删除失败');
+						}
+					},
+					error : function() {
+						console.log("ajax error");
+					}
+				});
+				layer.close(index);
+			});
+		}
+
+		// 更新学生事件
+		if (event === 'update-vip-user') {
+			// 获取数据填充专业下拉框值
+//			$.ajax({
+//				url : "major/queryAll",
+//				type : "get",
+//				dataType : "json",
+//				success : function(result) {
+//					$("#majorId").empty().append(new Option('请选择专业', ''));
+//					$.each(result, function(index, item) {
+//						$("#majorId").append(new Option(item.name, item.id));
+//						$("#majorId").val(data.majorId);
+//					});
+//					layui.form.render("select");
+//				}
+//			});
+			// 每次显示更新学生的表单前自动为表单填写该行的数据
+			form.val('vip-user-form', {
+				"id" : data.id,
+				"name" : data.name,
+				"username" : data.username,
+				"phone" : data.phone,
+				"address" : data.address
+			});
+			title = "更新用户";
+			url = "update";
+			openDialog();
+		}
+	});
+
 	$("#search_btn").click(function() {
 		table.reload('test', {
 			url : "/vip-user/queryByPage",
