@@ -11,22 +11,6 @@ layui.use([ 'jquery', 'table', 'layer', 'form', 'laydate' ], function() {
 	var laydate = layui.laydate;
 	laydate.render({
 		elem : '#vip-user' // 或 elem: document.getElementById('test')、elem:
-	// lay('#test') 等
-	});
-	laydate.render({
-		elem : '#vip-user2' // 或 elem:
-	// document.getElementById('test')、elem:
-	// lay('#test') 等
-	});
-	laydate.render({
-		elem : '#search_beginDate' // 或 elem:
-	// document.getElementById('test')、elem:
-	// lay('#test') 等
-	});
-	laydate.render({
-		elem : '#search_endDate' // 或 elem:
-	// document.getElementById('test')、elem:
-	// lay('#test') 等
 	});
 	// 记录选中的数据:做缓存使用,作为参数传递给后台
 	var ids = new Array();
@@ -131,7 +115,7 @@ layui.use([ 'jquery', 'table', 'layer', 'form', 'laydate' ], function() {
 				// 每次显示前重置表单
 				$('#vip-user-form')[0].reset();
 				// 清空表单中id值
-				$("input[name='id']").val('');
+				$("input[name='vipUserId']").val('');
 				title = "添加学生";
 				url = "add";
 				// 打开对话框
@@ -166,21 +150,9 @@ layui.use([ 'jquery', 'table', 'layer', 'form', 'laydate' ], function() {
 					layer.msg("请选择需要删除的记录");
 				}
 				break;
-			case 'getCheckData':
-				var data = checkStatus.data;
-				layer.alert(JSON.stringify(data));
-				break;
-			case 'getCheckLength':
-				var data = checkStatus.data;
-				layer.msg('选中了：' + data.length + ' 个');
-				break;
-			case 'isAll':
-				layer.msg(checkStatus.isAll ? '全选' : '未全选');
-				break;
-
 			//自定义头工具栏右侧图标 - 提示
 			case 'LAYTABLE_TIPS':
-				layer.alert('这是工具栏右侧自定义的一个图标按钮');
+				layer.alert('这是工具栏右侧自定义的一个图标按钮提示！');
 				break;
 		};
 	});
@@ -201,11 +173,10 @@ layui.use([ 'jquery', 'table', 'layer', 'form', 'laydate' ], function() {
 					success : function(data) {
 						if (data.statue == 0) {
 							layer.msg(data.msg);
-							table.reload('vip-user-tbl');
+							table.reload('test');
 						} else {
 							layer.msg('删除失败');
 						}
-						table.reload('test');
 					},
 					error : function() {
 						console.log("ajax error");
