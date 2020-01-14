@@ -3,6 +3,7 @@ package com.entor.controller;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import com.entor.service.IWaybillService;
  * </p>
  *
  * @author Willis
- * @since 2020-01-07
+ * @since 2020-01-07 订单管理
  */
 @RestController
 @RequestMapping("/waybill")
@@ -31,23 +32,34 @@ public class WaybillController {
 	@Autowired
 	private IWaybillService waybillService;
 
+	// 分页加按订单号模糊查询和按发货人查询并分页
 	@RequestMapping("/queryByPage")
-	public Map<String, Object> queryByPage(int page, int limit) {
-		return waybillService.queryByPage(page, limit);
+	public Map<String, Object> queryByPage(int page, int limit, String waybillNo, String wName) {
+		return waybillService.queryByPage(page, limit, waybillNo, wName);
 	}
 
+	// 逐条添加
 	@RequestMapping("/add")
 	public Result add(Waybill waybill) {
 		waybillService.save(waybill);
 		return new Result(0, "数据添加成功!");
 	}
 
+	// 批量导入
+	@RequestMapping("/addMore")
+	public Result addMore(List<Waybill> list) {
+		waybillService.saveBatch(list, 300);
+		return new Result(0, "数据添加成功!");
+	}
+
+	// 更新数据
 	@RequestMapping("/update")
 	public Result update(Waybill waybill) {
 		waybillService.updateById(waybill);
 		return new Result(0, "数据更新成功!");
 	}
 
+	// 删除功能
 	@RequestMapping("/deleteMore")
 	public Result deleteMore(String ids) {
 		waybillService.removeByIds(Arrays.asList(ids.split(",")));

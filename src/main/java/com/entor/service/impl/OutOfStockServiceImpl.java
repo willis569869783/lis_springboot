@@ -1,14 +1,17 @@
 package com.entor.service.impl;
 
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.entor.entity.OutOfStock;
 import com.entor.mapper.OutOfStockMapper;
 import com.entor.service.IOutOfStockService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author Willis
@@ -16,5 +19,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OutOfStockServiceImpl extends ServiceImpl<OutOfStockMapper, OutOfStock> implements IOutOfStockService {
+
+	@Override
+	public Map<String, Object> queryByPage(int page, int limit, Object... objects) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

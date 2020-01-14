@@ -1,14 +1,17 @@
 package com.entor.service.impl;
 
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.entor.entity.Stock;
 import com.entor.mapper.StockMapper;
 import com.entor.service.IStockService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author Willis
@@ -16,5 +19,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements IStockService {
+
+	@Override
+	public Map<String, Object> queryByPage(int page, int limit, Object... objects) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
