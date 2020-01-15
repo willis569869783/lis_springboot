@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Willis
- * @since 2020-01-07
+ * @since 2020-01-15
  */
 public class Route implements Serializable {
 
@@ -28,6 +28,11 @@ public class Route implements Serializable {
      */
     @TableField("Route_name")
     private String routeName;
+
+    /**
+     * 价格
+     */
+    private Integer roitePrice;
 
     /**
      * 创建时间
@@ -51,6 +56,14 @@ public class Route implements Serializable {
         this.routeName = routeName;
     }
 
+    public Integer getRoitePrice() {
+        return roitePrice;
+    }
+
+    public void setRoitePrice(Integer roitePrice) {
+        this.roitePrice = roitePrice;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -64,6 +77,7 @@ public class Route implements Serializable {
         return "Route{" +
         "routeId=" + routeId +
         ", routeName=" + routeName +
+        ", roitePrice=" + roitePrice +
         ", createTime=" + createTime +
         "}";
     }

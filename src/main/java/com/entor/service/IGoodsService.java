@@ -8,7 +8,7 @@ import com.entor.entity.Goods;
  * </p>
  *
  * @author Willis
- * @since 2020-01-07
+ * @since 2020-01-15
  */
 public interface IGoodsService extends IMyService<Goods> {
 

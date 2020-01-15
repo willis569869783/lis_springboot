@@ -15,7 +15,7 @@ import com.entor.service.IGoodsService;
  * </p>
  *
  * @author Willis
- * @since 2020-01-07
+ * @since 2020-01-15
  */
 @Service
 public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements IGoodsService {

@@ -11,7 +11,7 @@
  Target Server Version : 50515
  File Encoding         : 65001
 
- Date: 08/01/2020 17:03:45
+ Date: 15/01/2020 17:42:38
 */
 
 SET NAMES utf8mb4;
@@ -69,9 +69,7 @@ CREATE TABLE `goods`  (
   `goods_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '货物名字',
   `goods_information` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '货物信息',
   `goods_weight` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '货物重量',
-  `goods_addressee` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '货物收件人',
-  `order_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单id',
-  `sender_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '发送人id（用户id）',
+  `waybill_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单id',
   `create_time` timestamp DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`goods_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
@@ -127,6 +125,7 @@ DROP TABLE IF EXISTS `route`;
 CREATE TABLE `route`  (
   `Route_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '路线主键',
   `Route_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '路线名',
+  `roite_price` int(3) NOT NULL COMMENT '价格',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`Route_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
@@ -178,13 +177,17 @@ CREATE TABLE `vip_user`  (
   `phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '会员电话',
   `address` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '会员地址',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  PRIMARY KEY (`vip_user_id`) USING BTREE
+  PRIMARY KEY (`vip_user_id`) USING BTREE,
+  UNIQUE INDEX `username`(`username`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of vip_user
 -- ----------------------------
+INSERT INTO `vip_user` VALUES ('326255eff7bd9cb237e9020b912d525f', 'QWQ', 'QWQ', 'QWQ', '123456789', 'QWQ', '2020-01-13 16:55:09');
 INSERT INTO `vip_user` VALUES ('54545dsad', 'aa123456', 'aa123456', 'dsahgh', '11111111111', 'd5s6a46d4sa6ds', '2020-01-08 15:25:49');
+INSERT INTO `vip_user` VALUES ('a7f0e652fb7600896d400cb11919dff9', '啊啊啊大萨达', 'dsagfds', '的撒谎', '1265416', 'dsadsadsa', '2020-01-10 16:30:53');
+INSERT INTO `vip_user` VALUES ('fd85602be2154fc2653f169a743b4450', 'aa123456s', 'aa123456', 'sd555', '12345678911', '65d4sa6d48sad8sad', '2020-01-13 14:22:48');
 
 -- ----------------------------
 -- Table structure for warehouse
@@ -226,9 +229,16 @@ CREATE TABLE `waybill`  (
   `r_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '收件的姓名',
   `r_phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '收件人手机',
   `r_address` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '收件的地址',
-  `Order_state` int(1) NOT NULL COMMENT '1审核通过、0审核未通过、-1异常',
+  `wayvill_state` int(1) NOT NULL COMMENT '1审核通过、0审核未通过、-1异常、2已发出',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`waybill_no`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of waybill
+-- ----------------------------
+INSERT INTO `waybill` VALUES ('3e410aade89a7e1eede1d93cceabd2a3', '都会干', '12132158774', '大北京时间', '搭嘎苏', '54515471548', '的散户蛋黄酥给我个是', -1, '2020-01-13 16:17:07');
+INSERT INTO `waybill` VALUES ('be7bbc52b294fc451e130a413146a5ed', '啊啊啊啊啊啊', '2955', 'dsadsad', 'ds5a6d', 'a5d9s', 'd5sa9dsa', 1, '2020-01-13 11:34:52');
+INSERT INTO `waybill` VALUES ('c6cc087145cad4b512bea01813405d74', '的撒打算无', '的撒打算', '武器大师', '大萨达我', '死翘翘多', '王企鹅无', 0, '2020-01-13 11:42:22');
 
 SET FOREIGN_KEY_CHECKS = 1;

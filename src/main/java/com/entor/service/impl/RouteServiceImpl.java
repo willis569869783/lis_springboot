@@ -15,14 +15,14 @@ import com.entor.service.IRouteService;
  * </p>
  *
  * @author Willis
- * @since 2020-01-07
+ * @since 2020-01-15
  */
 @Service
 public class RouteServiceImpl extends ServiceImpl<RouteMapper, Route> implements IRouteService {
 
 	@Override
 	public Map<String, Object> queryByPage(int page, int limit, Object... objects) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 

@@ -3,6 +3,7 @@ package com.entor.util;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -36,6 +37,10 @@ public class MyUtil {
 		map.put("conut", info.getTotal());
 		map.put("data", info.getList());
 		return map;
+	}
+
+	public static String getUUID() {
+		return UUID.randomUUID().toString().replaceAll("-", "");
 	}
 
 }

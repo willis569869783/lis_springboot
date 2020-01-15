@@ -4,10 +4,12 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.entor.entity.Warehouse;
 import com.entor.mapper.WarehouseMapper;
 import com.entor.service.IWarehouseService;
+import com.entor.util.MyUtil;
 
 /**
  * <p>
@@ -22,8 +24,9 @@ public class WarehouseServiceImpl extends ServiceImpl<WarehouseMapper, Warehouse
 
 	@Override
 	public Map<String, Object> queryByPage(int page, int limit, Object... objects) {
-		// TODO Auto-generated method stub
-		return null;
+		QueryWrapper<Warehouse> queryWrapper = new QueryWrapper<>();
+
+		return MyUtil.getPage(page, limit, queryWrapper, this);
 	}
 
 }

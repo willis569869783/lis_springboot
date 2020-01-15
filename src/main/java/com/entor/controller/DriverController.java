@@ -42,20 +42,20 @@ public class DriverController {
 	@RequestMapping("/add")
 	public Result add(Driver driver) {
 		driverService.save(driver);
-		return new Result(0, "车辆添加成功！");
+		return new Result(0, "司机添加成功！");
 	}
 
 	@RequestMapping("/addMore")
 	public Result addMore(List<Driver> driver) {
 		driverService.saveBatch(driver, 300);
-		return new Result(0, "车辆添加成功！");
+		return new Result(0, "司机添加成功！");
 	}
 
 	// 更新数据
 	@RequestMapping("/update")
 	public Result update(Driver driver) {
 		driverService.updateById(driver);
-		return new Result(0, "数据更新成功!");
+		return new Result(0, "司机更新成功!");
 	}
 
 	// 删除功能

@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.entor.entity.Emp;
+import com.entor.entity.Goods;
 import com.entor.entity.Result;
+import com.entor.entity.Waybill;
 import com.entor.service.IEmpService;
 
 /**
@@ -61,6 +63,11 @@ public class EmpController {
 	public Result deleteMore(String ids) {
 		empService.removeByIds(Arrays.asList(ids.split(",")));
 		return new Result(0, "数据删除成功!");
+	}
+
+	@RequestMapping("/placingOrder")
+	public Result placingOrder(Waybill waybill, Goods goods) {
+		return empService.placingOrder(waybill, goods);
 	}
 
 	/**

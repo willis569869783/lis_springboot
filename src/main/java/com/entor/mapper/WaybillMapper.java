@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author Willis
- * @since 2020-01-07
+ * @since 2020-01-15
  */
 public interface WaybillMapper extends BaseMapper<Waybill> {
 
